@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Flowers School - Student Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #2e7d32;
+            --accent-color: #8bc34a;
+            --light-color: #f5f9fc;
+        }
+
+        body {
+            background-color: var(--light-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Authentication Section */
+        .auth-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 20px 0;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .auth-form h3 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+
+        .btn-school {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-school:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            color: white;
+        }
+
+        .text-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .text-link:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        .demo-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Main Application */
+        .main-application {
+            display: none;
+            padding: 20px 0;
+        }
+
+        .school-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-pills .nav-link {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin: 0 5px;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .nav-pills .nav-link.active, .nav-pills .nav-link:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .content-section {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            min-height: 500px;
+            display: none;
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .welcome-icon {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .welcome-section h1 {
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        /* Profile Section */
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .student-image {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .student-image img {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--primary-color);
+            transition: transform 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-card h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .info-label {
+            font-weight: 600;
+            width: 160px;
+            color: #555;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #333;
+        }
+
+        /* Timetable Section */
+        .timetable-container {
+            overflow-x: auto;
+        }
+
+        .timetable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .timetable th {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .timetable td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .time-slot {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .subject {
+            font-weight: 500;
+        }
+
+        .teacher {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Monthly Activities Section */
+        .chart-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .activities-list {
+            margin-top: 30px;
+        }
+
+        .activity-card {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .activity-subject {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .activity-description {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        /* Message Alerts */
+        .message {
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-school {
+                width: 100%;
+                max-width: 250px;
+            }
+            
+            .info-item {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+            
+            .auth-container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login/Register Section -->
+    <section class="auth-section" id="auth-section">
+        <div class="container">
+            <div class="auth-container">
+                <div class="logo-container">
+                    <div class="logo-icon">🌷</div>
+                    <div class="logo-text">Spring Flowers School</div>
+                    <p class="text-muted">Student Management System</p>
+                </div>
+
+                <!-- Message Display -->
+                <div id="message"></div>
+
+                <!-- Login Form -->
+                <div class="auth-form" id="login-form">
+                    <h3 class="text-center">Student Login</h3>
+                    <form id="loginForm">
+                        <input type="text" class="form-control" id="loginUsername" placeholder="Username" required>
+                        <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                        <button type="button" class="btn btn-school" onclick="login()">
+                            <i class="fas fa-sign-in-alt me-2"></i>Login
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-link" onclick="showRegister()">Don't have an account? Register</a>
+                    </div>
+                    <div class="demo-info">
+                        <strong>Demo Accounts:</strong><br>
+                        • Username: <strong>student</strong> | Password: <strong>password123</strong><br>
+                        • Username: <strong>alex</strong> | Password: <strong>alex2023</strong>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div class="auth-form" id="register-form" style="display: none;">
+                    <h3 class="text-center">Student Registration</h3>
+                    <form id="registerForm">
+                        <input type="text" class="form-control" id="regUsername" placeholder="Username (min 3 characters)" required>
+                        <input type="email" class="form-control" id="regEmail" placeholder="Email address" required>
+                        <input type="password" class="form-control" id="regPassword" placeholder="Password (min 6 characters)" required>
+                        <input type="password" class="form-control" id="regConfirmPassword" placeholder="Confirm Password" required>
+                        <button type="button" class="btn btn-school" onclick="register()">
+                            <i class="fas fa-user-plus me-2"></i>Register
+                        </button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="#" class="text-link" onclick="showLogin()">Already have an account? Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Application -->
+    <section class="main-application" id="main-application">
+        <div class="container">
+            <!-- Header -->
+            <header class="school-header">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">🌷</div>
+                        <div class="logo-text">Spring Flowers School</div>
+                    </div>
+                    <div class="user-info">
+                        <span id="welcome-user">Welcome, Student!</span>
+                        <button class="btn btn-outline-light btn-sm" onclick="logout()">
+                            <i class="fas fa-sign-out-alt me-1"></i>Logout
+                        </button>
+                    </div>
+                </div>
+                <p class="text-center mb-0">Student Management Portal - Where Education Blossoms</p>
+            </header>
+            
+            <!-- Navigation -->
+            <div class="nav-container">
+                <ul class="nav nav-pills justify-content-center" id="mainNav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('welcome-section')">
+                            <i class="fas fa-home me-2"></i>Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('profile-section')">
+                            <i class="fas fa-user me-2"></i>Student Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('timetable-section')">
+                            <i class="fas fa-calendar-alt me-2"></i>TimeTable
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('monthly-activities-section')">
+                            <i class="fas fa-chart-bar me-2"></i>Monthly Activities
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <main>
+                <!-- Welcome Section -->
+                <section class="content-section" id="welcome-section">
+                    <div class="welcome-section">
+                        <div class="welcome-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h1>Welcome to Spring Flowers School Portal</h1>
+                        <p class="lead">Your gateway to academic success and personal growth. Access your profile, timetable, and monthly activities all in one place.</p>
+                        <div class="action-buttons">
+                            <button class="btn btn-school" onclick="showSection('profile-section')">
+                                <i class="fas fa-user me-2"></i>View My Profile
+                            </button>
+                            <button class="btn btn-school" onclick="showSection('monthly-activities-section')">
+                                <i class="fas fa-chart-bar me-2"></i>View Monthly Activities
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Profile Section -->
+                <section class="content-section" id="profile-section">
+                    <h2 class="profile-header">
+                        <i class="fas fa-user-graduate me-2"></i>Student Profile
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="student-image">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" 
+                                     alt="Student Photo" class="img-fluid rounded shadow">
+                                <div class="student-id mt-3">
+                                    <h5 class="text-center">Alex Johnson</h5>
+                                    <p class="text-center text-muted">Student ID: SF20231567</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="info-card">
+                                <h3><i class="fas fa-info-circle me-2"></i>Personal Information</h3>
+                                <div class="info-item">
+                                    <div class="info-label">Full Name:</div>
+                                    <div class="info-value">Alex Johnson</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Student ID:</div>
+                                    <div class="info-value">SF20231567</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Date of Birth:</div>
+                                    <div class="info-value">March 15, 2005</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Email:</div>
+                                    <div class="info-value">alex.johnson@springflowers.edu</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Phone:</div>
+                                    <div class="info-value">(555) 123-4567</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3><i class="fas fa-graduation-cap me-2"></i>Academic Information</h3>
+                                <div class="info-item">
+                                    <div class="info-label">Grade Level:</div>
+                                    <div class="info-value">11th Grade</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">GPA:</div>
+                                    <div class="info-value">3.8/4.0</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Homeroom Teacher:</div>
+                                    <div class="info-value">Ms. Rodriguez</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Courses:</div>
+                                    <div class="info-value">Mathematics, Physics, Chemistry, English Literature, History, Computer Science</div>
+                                </div>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3><i class="fas fa-trophy me-2"></i>Extracurricular Activities</h3>
+                                <div class="info-item">
+                                    <div class="info-label">Sports:</div>
+                                    <div class="info-value">Basketball Team, Track & Field</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Clubs:</div>
+                                    <div class="info-value">Science Club, Debate Team</div>
+                                </div>
+                                <div class="info-item">
+                                    <div class="info-label">Achievements:</div>
+                                    <div class="info-value">Science Fair Winner (2023), Debate Competition Finalist</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Timetable Section -->
+                <section class="content-section" id="timetable-section">
+                    <h2 class="profile-header">
+                        <i class="fas fa-calendar-alt me-2"></i>Weekly Timetable
+                    </h2>
+                    <p class="text-center mb-4">Class 11 - Section A | Academic Year 2023-2024</p>
+                    
+                    <div class="timetable-container">
+                        <table class="timetable table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Time/Day</th>
+                                    <th>Monday</th>
+                                    <th>Tuesday</th>
+                                    <th>Wednesday</th>
+                                    <th>Thursday</th>
+                                    <th>Friday</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="time-slot">8:00 - 8:45</td>
+                                    <td>
+                                        <div class="subject">Mathematics</div>
+                                        <div class="teacher">Mr. Smith</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Physics</div>
+                                        <div class="teacher">Dr. Brown</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">English</div>
+                                        <div class="teacher">Ms. Davis</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Mathematics</div>
+                                        <div class="teacher">Mr. Smith</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Chemistry</div>
+                                        <div class="teacher">Mrs. Wilson</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">8:45 - 9:30</td>
+                                    <td>
+                                        <div class="subject">Physics</div>
+                                        <div class="teacher">Dr. Brown</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Mathematics</div>
+                                        <div class="teacher">Mr. Smith</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">History</div>
+                                        <div class="teacher">Mr. Johnson</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Computer Science</div>
+                                        <div class="teacher">Ms. Lee</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Physics</div>
+                                        <div class="teacher">Dr. Brown</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="time-slot">9:30 - 10:15</td>
+                                    <td>
+                                        <div class="subject">Chemistry</div>
+                                        <div class="teacher">Mrs. Wilson</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">English</div>
+                                        <div class="teacher">Ms. Davis</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Mathematics</div>
+                                        <div class="teacher">Mr. Smith</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">Physics Lab</div>
+                                        <div class="teacher">Dr. Brown</div>
+                                    </td>
+                                    <td>
+                                        <div class="subject">English</div>
+                                        <div class="teacher">Ms. Davis</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Monthly Activities Section -->
+                <section class="content-section" id="monthly-activities-section">
+                    <h2 class="profile-header">
+                        <i class="fas fa-chart-bar me-2"></i>Monthly Activities Chart
+                    </h2>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="subjectSelect" class="form-label"><strong>Select Subject:</strong></label>
+                                <select class="form-select" id="subjectSelect" onchange="updateActivities()">
+                                    <option value="all">All Subjects</option>
+                                    <option value="Mathematics">Mathematics</option>
+                                    <option value="Physics">Physics</option>
+                                    <option value="Chemistry">Chemistry</option>
+                                    <option value="English">English</option>
+                                    <option value="History">History</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="monthSelect" class="form-label"><strong>Select Month:</strong></label>
+                                <select class="form-select" id="monthSelect" onchange="updateActivities()">
+                                    <option value="january">January</option>
+                                    <option value="february">February</option>
+                                    <option value="march" selected>March</option>
+                                    <option value="april">April</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activities List -->
+                    <div class="activities-list">
+                        <h4 class="mb-3"><i class="fas fa-list me-2"></i>Monthly Activities Details</h4>
+                        <div id="activitiesContainer" class="row">
+                            <!-- Activities will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+            </main>
+            
+            <!-- Footer -->
+            <footer class="footer">
+                <p class="mb-0">&copy; 2023 Spring Flowers School. All rights reserved. | Student Management System v2.0</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        // ==================== USER MANAGEMENT ====================
+        let users = [];
+        
+        function loadUsers() {
+            const stored = localStorage.getItem('studentUsers');
+            if (stored) {
+                users = JSON.parse(stored);
+            } else {
+                users = [
+                    { username: 'student', password: 'password123', email: 'student@school.com' },
+                    { username: 'alex', password: 'alex2023', email: 'alex@school.com' }
+                ];
+                localStorage.setItem('studentUsers', JSON.stringify(users));
+            }
+        }
+        
+        function saveUsers() {
+            localStorage.setItem('studentUsers', JSON.stringify(users));
+        }
+        
+        // ==================== MESSAGE DISPLAY ====================
+        function showMessage(text, type) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.innerHTML = `<div class="message ${type}">${text}</div>`;
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 4000);
+        }
+        
+        // ==================== AUTHENTICATION ====================
+        function showLogin() {
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('message').innerHTML = '';
+        }
+        
+        function showRegister() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('message').innerHTML = '';
+        }
+        
+        function login() {
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                showMessage('✅ Login successful! Welcome to the student portal.', 'success');
+                
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('main-application').style.display = 'block';
+                document.getElementById('welcome-user').textContent = `Welcome, ${username}!`;
+                
+                showSection('welcome-section');
+            } else {
+                showMessage('❌ Login failed! Please check your username and password.', 'error');
+            }
+        }
+        
+        function register() {
+            const username = document.getElementById('regUsername').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const password2 = document.getElementById('regConfirmPassword').value;
+            
+            // Validation
+            if (!username || !email || !password || !password2) {
+                showMessage('❌ Please fill all fields!', 'error');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showMessage('❌ Username must be at least 3 characters!', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('❌ Password must be at least 6 characters!', 'error');
+                return;
+            }
+            
+            if (password !== password2) {
+                showMessage('❌ Passwords do not match!', 'error');
+                return;
+            }
+            
+            if (users.find(u => u.username === username)) {
+                showMessage('❌ Username already exists!', 'error');
+                return;
+            }
+            
+            if (users.find(u => u.email === email)) {
+                showMessage('❌ Email already registered!', 'error');
+                return;
+            }
+            
+            // Add new user
+            users.push({ username, password, email });
+            saveUsers();
+            
+            showMessage('✅ Registration successful! You can now login.', 'success');
+            
+            // Clear form and show login
+            document.getElementById('regUsername').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regPassword2').value = '';
+            
+            showLogin();
+        }
+        
+        function logout() {
+            document.getElementById('main-application').style.display = 'none';
+            document.getElementById('auth-section').style.display = 'block';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            showLogin();
+        }
+        
+        // ==================== NAVIGATION ====================
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).style.display = 'block';
+            
+            // Update active nav
+            document.querySelectorAll('#mainNav .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Initialize activities if needed
+            if (sectionId === 'monthly-activities-section') {
+                updateActivities();
+            }
+        }
+        
+        // ==================== MONTHLY ACTIVITIES ====================
+        const monthlyActivities = [
+            { 
+                id: 1, 
+                activity: "Create project file which contains tables between 12 to 19", 
+                subject: "Mathematics", 
+                month: "march", 
+                completion: 85 
+            },
+            { 
+                id: 2, 
+                activity: "Complete physics lab report on Newton's Laws", 
+                subject: "Physics", 
+                month: "march", 
+                completion: 90 
+            },
+            { 
+                id: 3, 
+                activity: "Chemistry practical: Acid-base titration experiment", 
+                subject: "Chemistry", 
+                month: "march", 
+                completion: 75 
+            },
+            { 
+                id: 4, 
+                activity: "Essay writing on Shakespeare's Macbeth", 
+                subject: "English", 
+                month: "march", 
+                completion: 80 
+            },
+            { 
+                id: 5, 
+                activity: "Research project on World War II", 
+                subject: "History", 
+                month: "march", 
+                completion: 70 
+            },
+            { 
+                id: 6, 
+                activity: "Build a simple web application using HTML/CSS/JS", 
+                subject: "Computer Science", 
+                month: "march", 
+                completion: 95 
+            }
+        ];
+        
+        function updateActivities() {
+            const selectedSubject = document.getElementById('subjectSelect').value;
+            const selectedMonth = document.getElementById('monthSelect').value;
+            
+            let filteredActivities = monthlyActivities;
+            
+            if (selectedSubject !== 'all') {
+                filteredActivities = filteredActivities.filter(activity => activity.subject === selectedSubject);
+            }
+            
+            if (selectedMonth !== 'all') {
+                filteredActivities = filteredActivities.filter(activity => activity.month === selectedMonth);
+            }
+            
+            displayActivities(filteredActivities);
+        }
+        
+        function displayActivities(activities) {
+            const container = document.getElementById('activitiesContainer');
+            
+            if (activities.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No activities found for the selected criteria.
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = activities.map(activity => `
+                <div class="col-md-6 col-lg-4 mb-3">
+                    <div class="activity-card">
+                        <div class="activity-subject">
+                            <i class="fas fa-book me-2"></i>${activity.subject}
+                        </div>
+                        <div class="activity-description">
+                            ${activity.activity}
+                        </div>
+                        <div class="activity-date text-muted small">
+                            <i class="fas fa-calendar me-1"></i>
+                            Month: ${activity.month.charAt(0).toUpperCase() + activity.month.slice(1)}
+                        </div>
+                        <div class="progress mt-3">
+                            <div class="progress-bar" 
+                                 role="progressbar" 
+                                 style="width: ${activity.completion}%; background-color: #4caf50;" 
+                                 aria-valuenow="${activity.completion}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                                ${activity.completion}% Complete
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // ==================== INITIALIZATION ====================
+        function init() {
+            loadUsers();
+            showLogin();
+            showSection('welcome-section');
+        }
+        
+        // Start the application
+        init();
+    </script>
+</body>
+</html>
